@@ -1,0 +1,37 @@
+﻿@model List<ChoixRestoV2.Models.Resultats>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Voir les résultats</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <p>Résultats du sondage :</p>
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Nombre de votes</th>
+        </tr>
+        @foreach (var resto in Model)
+        {
+            <tr>
+                <td>@resto.Nom</td>
+                <td>@resto.Telephone</td>
+                <td>@resto.NombreDeVotes</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>
