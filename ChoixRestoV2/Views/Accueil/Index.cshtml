@@ -1,0 +1,33 @@
+﻿@model List<ChoixRestoV2.Models.Resto>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Choisir un resto</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <span>Prêt à choisir un restaurant?</span>
+    @using (Html.BeginForm())
+    {
+        <input type="submit" value="créer un sondage" />
+    }
+        <ul>
+            <li>@Html.ActionLink("Ajouter un restaurant", "CreerRestaurant", "Restaurant");</li>
+            <li>@Html.ActionLink("Modifier les restaurants", "index", "Restaurant");</li>
+        </ul>
+</body>
+</html>

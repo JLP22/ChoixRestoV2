@@ -1,0 +1,40 @@
+﻿@model ChoixRestoV2.Models.Resto 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Creer restaurant</title>
+    <link type="text/css" href="~/Content/Site.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>Ajouter un restaurant</legend>
+
+            <div>
+                @Html.LabelFor(model => model.Nom)
+                @Html.TextBoxFor(model => model.Nom)
+                @Html.ValidationMessageFor(model => model.Nom)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Telephone)
+                @Html.TextBoxFor(model => model.Telephone)
+                @Html.ValidationMessageFor(model => model.Telephone)
+            </div>
+            <br />
+            <input type="submit" value="Ajouter" />
+        </fieldset>
+    }
+</body>
+</html>
+
+
