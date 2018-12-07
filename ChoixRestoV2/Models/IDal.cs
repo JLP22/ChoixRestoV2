@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChoixRestoV2.Models
 {
+    //Définition du contrat de la DAL (Data Access Layer)
+    //DAL : Permet d’abstraire le plus possible la couche d’accès aux données (ex : pour chg BBD, remplacer BDD par WS) et pour créer un point d’entrée unique
     public interface IDal : IDisposable
     {
         void CreerRestaurant(string nom, string telephone);

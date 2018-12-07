@@ -136,6 +136,7 @@
     <Compile Include="Models\Dal.cs" />
     <Compile Include="Models\DalenDur.cs" />
     <Compile Include="Models\IDal.cs" />
+    <Compile Include="Models\InitChoixResto.cs" />
     <Compile Include="Models\Resto.cs" />
     <Compile Include="Models\Resultats.cs" />
     <Compile Include="Models\Sondage.cs" />

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ChoixRestoV2.Controllers
 {
+    //Controlleur restaurant permettant de lister, modifier ou créer un restaurant
     public class RestaurantController : Controller
     {
         //Pour eviter des using dans le corps de l'action (factorise dal)
@@ -25,6 +26,7 @@ namespace ChoixRestoV2.Controllers
             dal = dalIoc;
         }
 
+        //Controlleur de la vue Index
         public ActionResult Index()
         {
             List<Resto> listeDesRestaurants = dal.ObtientTousLesRestaurants();
@@ -53,10 +55,12 @@ namespace ChoixRestoV2.Controllers
                 return View(resto);
             //Création du restaurant
             dal.CreerRestaurant(resto.Nom, resto.Telephone);
+            //Redirection vers une action (d'un controlleur avec paramètre si besoin)
             //renvoi sur la vue Index
             return RedirectToAction("Index");
         }
 
+        //Utilisation d'un paramètre int nullable pour permettre de renvoyer vers une vue spéciale s’il n’y a pas de valeur dans l’entier
         public ActionResult ModifierRestaurant(int? id)
         {
             if (id.HasValue)
@@ -76,6 +80,8 @@ namespace ChoixRestoV2.Controllers
             if (!ModelState.IsValid)
                 return View(resto);
             dal.ModifierRestaurant(resto.Id, resto.Nom, resto.Telephone);
+            //Redirection vers une action (d'un controlleur avec paramètre si besoin)
+            //renvoi sur la vue Index
             return RedirectToAction("Index");
         }
     }

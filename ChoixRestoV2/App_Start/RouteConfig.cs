@@ -9,6 +9,7 @@ namespace ChoixRestoV2
 {
     public class RouteConfig
     {
+        //Par défaut routage vers l'action Index du controlleur Accueil
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

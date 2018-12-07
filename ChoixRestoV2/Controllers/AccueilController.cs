@@ -21,6 +21,7 @@ namespace ChoixRestoV2.Controllers
         }
 
         // GET: Accueil
+        //Renvoi vers la vue par défaut du controlleur = Accueil
         public ActionResult Index()
         {
             return View();
@@ -31,7 +32,7 @@ namespace ChoixRestoV2.Controllers
         public ActionResult IndexPost()
         {
             int idSondage = dal.CreerUnSondage();
-            return View("Index", "Vote", new { id = idSondage });
+            return RedirectToAction("Index", "Vote", new { id = idSondage });
         }
     }   
 }

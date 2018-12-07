@@ -7,6 +7,7 @@ using System.Web;
 
 namespace ChoixRestoV2.Models
 {
+    //DAL : Permet d’abstraire le plus possible la couche d’accès aux données (ex : pour chg BBD, remplacer BDD par WS) et pour créer un point d’entrée unique
     public class Dal : IDal
     {
         private BddContext bdd;
@@ -63,6 +64,17 @@ namespace ChoixRestoV2.Models
             return bdd.Utilisateurs.FirstOrDefault(u => u.Id == id);
         }
 
+        //******** Début Bidouille gestion utilisateurs **********
+        //système d’authentification pour permettre de différencier les utilisateur
+
+        /*Avant
+         * public Utilisateur ObtenirUtilisateur(string idStr)
+        {
+            int id;
+            if (int.TryParse(idStr, out id))
+                return ObtenirUtilisateur(id);
+            return null;
+        }*/
         public Utilisateur ObtenirUtilisateur(string idStr)
         {
             switch (idStr)
@@ -88,6 +100,34 @@ namespace ChoixRestoV2.Models
             }
             return utilisateur;
         }
+
+        /*Avant
+         * public bool ADejaVote(int idSondage, string idStr)
+        {
+            int id;
+            if (int.TryParse(idStr, out id))
+            {
+                Sondage sondage = bdd.Sondages.First(s => s.Id == idSondage);
+                if (sondage.Votes == null)
+                    return false;
+                return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == id);
+            }
+            return false;
+        }*/
+
+        public bool ADejaVote(int idSondage, string idStr)
+        {
+            Utilisateur utilisateur = ObtenirUtilisateur(idStr);
+            if (utilisateur != null)
+            {
+                Sondage sondage = bdd.Sondages.First(s => s.Id == idSondage);
+                if (sondage.Votes == null)
+                    return false;
+                return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == utilisateur.Id);
+            }
+            return false;
+        }
+        //******** Fin Bidouille **********
 
         public int CreerUnSondage()
         {
@@ -124,19 +164,6 @@ namespace ChoixRestoV2.Models
                 resultats.Add(new Resultats { Nom = resto.Nom, Telephone = resto.Telephone, NombreDeVotes = nombreDeVotes });
             }
             return resultats;
-        }
-
-        public bool ADejaVote(int idSondage, string idStr)
-        {
-            Utilisateur utilisateur = ObtenirUtilisateur(idStr);
-            if (utilisateur != null)
-            {
-                Sondage sondage = bdd.Sondages.First(s => s.Id == idSondage);
-                if (sondage.Votes == null)
-                    return false;
-                return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == utilisateur.Id);
-            }
-            return false;
         }
 
         public void Dispose()
