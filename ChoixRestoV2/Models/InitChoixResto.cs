@@ -14,9 +14,9 @@ namespace ChoixRestoV2.Models
         //La méthode Seed doit être substituée par une alimentation personnalisée
         protected override void Seed(BddContext context)
         {
-            context.Restos.Add(new Resto { Id = 1, Nom = "Resto pinambour", Telephone = "123" });
-            context.Restos.Add(new Resto { Id = 2, Nom = "Resto pinière", Telephone = "456" });
-            context.Restos.Add(new Resto { Id = 3, Nom = "Resto toro", Telephone = "789" });
+            context.Restos.Add(new Resto { Id = 1, Nom = "Resto pinambour", Telephone = "0296719100" });
+            context.Restos.Add(new Resto { Id = 2, Nom = "Resto pinière", Telephone = "0296719102" });
+            context.Restos.Add(new Resto { Id = 3, Nom = "Resto toro", Telephone = "0296719103" });
 
             base.Seed(context);
         }

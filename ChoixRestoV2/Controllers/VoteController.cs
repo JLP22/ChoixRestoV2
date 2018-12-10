@@ -8,6 +8,9 @@ using System.Web.Mvc;
 
 namespace ChoixRestoV2.Controllers
 {
+    //Controlleur Vote pour orienter vers :
+    //la page de saisi du vote (méthode Get et post pour envoi formulaire)
+    //ou du résultat
     public class VoteController : Controller
     {
         //Pour eviter des using dans le corps de l'action (factorise dal)
