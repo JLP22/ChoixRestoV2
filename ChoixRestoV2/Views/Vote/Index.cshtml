@@ -11,17 +11,28 @@
     <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
     <script type="text/javascript">
+
+        //Utilisation framework de validation de jQuery pour validation côté client 
+
+        //Ajout méthode "verifcontact"  dans le mécanisme de validation
+        //Passage des paramètres au mécanisme de validation
         jQuery.validator.addMethod("verifListe", function (value, element, params) {
             var nombreCoche = $('input:checked[data-val-verifListe]').length;
+            //Si aucune case à cocher sélectionnée
             if (nombreCoche == 0) {
+                //permet d’accéder au span  qui possède un attribut data - valmsg -for  qui vaut ListeDesResto
+                //vaorisation msg erreur + suppression classe css normale + initialisation classe validation-error
                 $('span[data-valmsg-for=ListeDesResto]').text(params.message).removeClass("field-validation-valid").addClass("field-validation-error");
             }
             else {
+                //Vider msg erreur 
                 $('span[data-valmsg-for=ListeDesResto]').text('');
             }
             return nombreCoche != 0;
         });
 
+        // Ajout de la méthode verifListe aux valideurs
+        // Extraction des valeurs des attributs de la balise HTML dans le paramètre "options"
         jQuery.validator.unobtrusive.adapters.add
             ("verifListe", function (options) {
                 options.params.message = options.message;
@@ -32,15 +43,19 @@
 </head>
 <body>
     <p>Cochez les restaurants où vous voulez bien aller. Attention, le vote est définitif !</p>
+    @*Message erreur si validation données KO*@
     @Html.ValidationMessageFor(m => m.ListeDesResto)
     @using (Html.BeginForm())
     {
+        @*Pour chaque RestaurantVoteViewModel*@
         for (int i = 0; i < Model.ListeDesResto.Count; i++)
         {
             <div>
+                @*Helper avec génération des attributs pour la validation client*@
                 @Html.CheckBoxFor(m => m.ListeDesResto[i].EstSelectionne, new { data_val = "true", data_val_verifListe = "Vous devez choisir au moins un restaurant" })
                 @Html.LabelFor(m => m.ListeDesResto[i].EstSelectionne, Model.ListeDesResto[i].NomEtTelephone)
                 @*@Html.ValidationMessageFor(m => m.ListeDesResto[i].EstSelectionne)*@
+                @*champs cachés afin de fournir les éléments au binding de modèle pour qu’il puisse reconstituer view-model lorsque le formulaire est soumis*@
                 @Html.HiddenFor(m => m.ListeDesResto[i].Id)
                 @Html.HiddenFor(m => m.ListeDesResto[i].NomEtTelephone)
             </div>
@@ -48,4 +63,4 @@
         <input type="submit" value="Valider le choix" style="margin-top: 20px;" />
     }
 </body>
-</html>
+        </html>
