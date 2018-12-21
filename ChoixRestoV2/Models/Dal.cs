@@ -67,15 +67,16 @@ namespace ChoixRestoV2.Models
         //******** Début Bidouille gestion utilisateurs **********
         //système d’authentification pour permettre de différencier les utilisateur
 
-        /*Avant
-         * public Utilisateur ObtenirUtilisateur(string idStr)
+        /*Avant bidouille*/
+        public Utilisateur ObtenirUtilisateur(string idStr)
         {
             int id;
             if (int.TryParse(idStr, out id))
                 return ObtenirUtilisateur(id);
             return null;
-        }*/
-        public Utilisateur ObtenirUtilisateur(string idStr)
+        }
+        /*Après bidouille
+         * public Utilisateur ObtenirUtilisateur(string idStr)
         {
             switch (idStr)
             {
@@ -88,7 +89,7 @@ namespace ChoixRestoV2.Models
                 default:
                     return CreeOuRecupere("Timéo", "1234");
             }
-        }
+        }*/
 
         private Utilisateur CreeOuRecupere(string nom, string motDePasse)
         {
@@ -101,8 +102,8 @@ namespace ChoixRestoV2.Models
             return utilisateur;
         }
 
-        /*Avant
-         * public bool ADejaVote(int idSondage, string idStr)
+        /*Avant bidouille*/
+        public bool ADejaVote(int idSondage, string idStr)
         {
             int id;
             if (int.TryParse(idStr, out id))
@@ -113,8 +114,9 @@ namespace ChoixRestoV2.Models
                 return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == id);
             }
             return false;
-        }*/
-
+        }
+        /* Après bidouille
+         * 
         public bool ADejaVote(int idSondage, string idStr)
         {
             Utilisateur utilisateur = ObtenirUtilisateur(idStr);
@@ -126,7 +128,7 @@ namespace ChoixRestoV2.Models
                 return sondage.Votes.Any(v => v.Utilisateur != null && v.Utilisateur.Id == utilisateur.Id);
             }
             return false;
-        }
+        }*/
         //******** Fin Bidouille **********
 
         public int CreerUnSondage()

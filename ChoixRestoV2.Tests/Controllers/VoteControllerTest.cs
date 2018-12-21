@@ -31,7 +31,10 @@ namespace ChoixRestoV2.Tests.Controllers
              
             //bouchonner propriété Browser par défaut
             Mock<ControllerContext> controllerContext = new Mock<ControllerContext>();
-            controllerContext.Setup(p => p.HttpContext.Request.Browser.Browser).Returns("1");
+            //Modif suite gestion authentification
+            //ne plus utiliser le bouchon de la propriété Browser  mais plutôt un bouchon de la propriété Identity.Name
+            //controllerContext.Setup(p => p.HttpContext.Request.Browser.Browser).Returns("1");
+            controllerContext.Setup(p => p.HttpContext.User.Identity.Name).Returns("1");
 
             controleur = new VoteController(dal);
             controleur.ControllerContext = controllerContext.Object;
@@ -137,7 +140,10 @@ namespace ChoixRestoV2.Tests.Controllers
             mock.Setup(m => m.ObtenirUtilisateur("1")).Returns(new Utilisateur { Id = 1, Prenom = "Nico" });
 
             Mock<ControllerContext> controllerContext = new Mock<ControllerContext>();
-            controllerContext.Setup(p => p.HttpContext.Request.Browser.Browser).Returns("1");
+            //Modif suite gestion authentification
+            //ne plus utiliser le bouchon de la propriété Browser  mais plutôt un bouchon de la propriété Identity.Name
+            //controllerContext.Setup(p => p.HttpContext.Request.Browser.Browser).Returns("1");
+            controllerContext.Setup(p => p.HttpContext.User.Identity.Name).Returns("1");
             controleur = new VoteController(mock.Object);
             controleur.ControllerContext = controllerContext.Object;
 

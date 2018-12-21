@@ -13,8 +13,10 @@ namespace ChoixRestoV2.Models
         public int Id { get; set; }
         //annotation pour rendre une propriété obligatoire (rendre le champ de la base de données en "not null")
         [Required]
+        [Display(Name = "Prénom")]
         public string Prenom { get; set; }
         [Required]
+        [Display(Name = "Mot de passe")]
         public string MotDePasse { get; set; }
     }
 }

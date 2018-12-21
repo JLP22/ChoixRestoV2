@@ -11,6 +11,7 @@ namespace ChoixRestoV2.Controllers
     //Controlleur Vote pour orienter vers :
     //la page de saisi du vote (méthode Get et post pour envoi formulaire)
     //ou du résultat
+    [Authorize]
     public class VoteController : Controller
     {
         //Pour eviter des using dans le corps de l'action (factorise dal)
@@ -30,6 +31,7 @@ namespace ChoixRestoV2.Controllers
         }
 
         //GET (affichage vue) : Action Index
+        [AllowAnonymous]
         public ActionResult Index(int id)
         {
             //Création du view-modele de liste des Restaurant avec CB
@@ -38,7 +40,8 @@ namespace ChoixRestoV2.Controllers
                 ListeDesResto = dal.ObtientTousLesRestaurants().Select(r => new RestaurantCheckBoxViewModel { Id = r.Id, NomEtTelephone = string.Format("{0} ({1})", r.Nom, r.Telephone) }).ToList()
             };
             //Si l'utilisateur a déjà voté, affichage des résultats
-            if (dal.ADejaVote(id, Request.Browser.Browser))
+            //Identifiant de l’utilisateur dans la propriété Name car c'est L'id utilisé lors de l'appel (Login\FormsAuthentication.SetAuthCookie(id.ToString(), false);)
+            if (dal.ADejaVote(id, HttpContext.User.Identity.Name))
             {
                 return RedirectToAction("AfficheResultat", new { id = id });
             }
@@ -56,7 +59,9 @@ namespace ChoixRestoV2.Controllers
                 return View(viewModel);
 
             //Teste utilisateur valide
-            Utilisateur utilisateur = dal.ObtenirUtilisateur(Request.Browser.Browser);
+            //Utilisateur utilisateur = dal.ObtenirUtilisateur(Request.Browser.Browser);
+            //Identifiant de l’utilisateur dans la propriété Name car c'est L'id utilisé lors de l'appel (Login\FormsAuthentication.SetAuthCookie(id.ToString(), false);)
+            Utilisateur utilisateur = dal.ObtenirUtilisateur(HttpContext.User.Identity.Name);
             if (utilisateur == null)
                 return new HttpUnauthorizedResult();
             //Pour chaque CB cochée, ajoute vote pour le restaurant concerné
@@ -72,7 +77,8 @@ namespace ChoixRestoV2.Controllers
         public ActionResult AfficheResultat(int id)
         {
             //Si l'utitilisateur n'a pas encore voté, route vers l'action Index (= vue Vote/Index)
-            if (!dal.ADejaVote(id, Request.Browser.Browser))
+            //Identifiant de l’utilisateur dans la propriété Name car c'est L'id utilisé lors de l'appel (Login\FormsAuthentication.SetAuthCookie(id.ToString(), false);)
+            if (!dal.ADejaVote(id, HttpContext.User.Identity.Name))
             {
                 return RedirectToAction("Index", new { id = id });
             }

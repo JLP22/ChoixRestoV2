@@ -1,0 +1,32 @@
+﻿@model ChoixRestoV2.Models.Utilisateur
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Connectez-vous</title>
+</head>
+<body>
+
+    <p>Créer un compte : </p>
+    @*Formulaire de création d'un compte utilisateur*@
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.LabelFor(m => m.Prenom)
+            @Html.TextBoxFor(m => m.Prenom)
+            @Html.ValidationMessageFor(m => m.Prenom)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.MotDePasse)
+            @Html.PasswordFor(m => m.MotDePasse)
+            @Html.ValidationMessageFor(m => m.MotDePasse)
+        </div>
+        <input type="submit" value="Créer" />
+    }
+</body>
+</html>
